@@ -1,24 +1,31 @@
-.Boxs{
-  border: 1px solid black; 
-  width: 500px;
-  margin:20px;
+.container{
+  display: flex;
+  justify-content: center;
+}
+.game{
+  border:1px solid black;
+  margin:10px;
   text-align: center;
 }
-.Box_title{
-  font-size: 2rem;
-}
-
-.Box-img{
-  width: 500px;
-  
-}
-
 .BOX_list{
   display: flex;
   justify-content: center;
 }
 
-.btnlist{
+.title{
+  font-size: 3rem;
+}
+
+
+
+.btnBox{
   display: flex;
   justify-content: center;
 }
+button{
+  margin:10px;  
+}
+
+.win{ border: 10px solid green ; color:green}
+.lose{border: 10px solid red ; color: red;}
+.tie {border: 10px  solid black ; color:black}

@@ -1,73 +1,75 @@
 import { useState } from 'react';
 import './App.css';
 import Box from './component/Box';
+import { FaHandPaper ,FaHandScissors,FaHandRock, FaUserAltSlash} from 'react-icons/fa';
 
-let 선택 = {
-  Sicssor : {
-    name : '가위',
-    img : 'https://cdn.crowdpic.net/detail-thumb/thumb_d_4ABE250623ED062CF7DBB6CFB93E364E.jpg'
+let Choice={
+  scissors:{
+    name:'Scissors',
+    img :'https://blog.kakaocdn.net/dn/HfURw/btqXKvOTNWK/gWTwPXEg9QzSV0ilOuwuak/img.png'
   },
- Rock : {
-  name : '주먹',
-  img : 'https://src.hidoc.co.kr/image/lib/2020/7/16/1594882105658_0.jpg'
- }
-,
-paper : {
-  name : '보',
-  img : 'https://korearps.kr/wp-content/uploads/sites/75/2020/03/slider-pic-102.png'
-}
-
+  rock:{
+  name:'Rock',
+  img : 'https://blog.kakaocdn.net/dn/pSJwo/btqXJV1lACE/nx5XrxkCLWXh9UsnoS8vbK/img.png'
+  },
+  paper:{
+    name:'Paper',
+    img : 'https://blog.kakaocdn.net/dn/bmjB2s/btqXHhp6kpG/TH14W4U612SxKo9uuR2sB0/img.png'
+  }
 }
 
 function App() {
+  const [userSelect,setUserSetect] = useState('null')
+    const[computerSelect,setCompuerSelect] =useState('null')
+    const[result,setresult] = useState('')
 
-  const[choice,setChoice]=useState(null)
-  const[computerChoice,setComputerChoice]=useState(null)
-  const[result,setResult] = useState('')
-  const 클릭 = (실행)  =>{
-    setChoice(선택[실행])
+    const play = (userChoice) =>{
+      setUserSetect(Choice[userChoice])
+    let computerChice = randomChoice()
+    setCompuerSelect(computerChice)
+
+    let judgment = winlose(Choice[userChoice],computerChice)
+    setresult(judgment)
+    }
+    
+    const winlose= (user,computer)=>{
+        console.log("유저",user,"컴퓨터",computer)
+
+        if(user.name === computer.name){
+          return "tie"
+        }else if(user.name ==="Scissors")
+        return computer.name === "Paper" ? "win":"lose"
+        else if(user.name === "Paper")
+        return computer.name === "Rock"?"win" : "lose"
+        else if(user.name === "Rock")
+        return computer.name ===  "Scissors"?"win":"lose"
+      }
+   
   
-    let computers = rendomChoice();
-    setComputerChoice(computers)
-    console.log(computers)
-     //유저가 선택한 값과 컴퓨터가 선택한 값을 가져온다.
-    let 결과값 =   setResult(judgement(선택[실행],computers))
-    console.log("어떤거니?",결과값)
-  }
-
-  const judgement = (user,computer)=>{
-    console.log("유저",user,"컴퓨터",computer)
-
-    if(user.name == computer.name){return "tie"
-  } else if(user.name =="주먹")
-  return computer.name == "가위"?"win":"lose"
-  else if(user.name == "가위")
-  return computer.name == "보"?"win":"lose"
-  else if(user.name == "보")
-  return computer.name == "주먹"?"win":"lose"
+const randomChoice = () =>{
+  let itemArray = Object.keys(Choice);
+  console.log(itemArray)
+  let randomItem = Math.floor(Math.random()*itemArray.length)
+  console.log(randomItem)
+  let final = itemArray[randomItem]
+  return Choice[final]
 }
-  const rendomChoice = () =>{
-   let arry = Object.keys(선택)
-   console.log(arry)
-   let Arryrendom = Math.floor( Math.random()*arry.length)
-   console.log(Arryrendom)
-   let final = arry[Arryrendom]
-   return 선택[final]
+  
+  
 
-  }
-  return (
-    <>
-    <div className='BOX_list'>
-      <Box title="user" item={choice} result={result}/>
-      <Box title="computer" item={computerChoice} result={result} />
-      
-    </div>
-    <div className="btnlist">
-    <button className='btn' onClick={()=>클릭("Sicssor") }>가위</button>
-  <button className='btn' onClick={()=>클릭("Rock")}>바위</button>
-  <button className='btn' onClick={()=>클릭("paper")}>보</button>
+return (
+   <>
+   <div className='BOX_list'>
+   <Box title={"user"}  item={userSelect}  result={result}/>
+   <Box title={"computer"} item={computerSelect} result={result}/>
+  </div>
+  <div className="btnBox">
+  <button onClick={()=>play("scissors")}  ><FaHandScissors/></button>
+  <button onClick={()=>play("rock")}><FaHandRock/></button>
+  <button onClick={()=>play("paper")} ><FaHandPaper/></button>
   </div>
   </>
+
   ); 
 
   }
